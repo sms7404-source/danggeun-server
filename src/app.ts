@@ -18,6 +18,7 @@ import alertRoutes from './routes/alerts';
 import notificationRoutes from './routes/notifications';
 import reportRoutes from './routes/reports';
 import blockRoutes from './routes/blocks';
+import offerRoutes from './routes/offers';
 import { errorHandler } from './middleware/errorHandler';
 import { supabaseAdmin } from './utils/supabase';
 import { db } from './db';
@@ -64,6 +65,10 @@ app.use('/api/alerts', alertRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/blocks', blockRoutes);
+app.use('/api/offers', offerRoutes);
+
+// Socket.io 인스턴스를 라우트에서 접근할 수 있도록 공유
+app.set('io', io);
 
 // Error handler
 app.use(errorHandler);

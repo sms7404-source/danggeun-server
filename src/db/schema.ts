@@ -123,6 +123,20 @@ export const notifications = pgTable('notifications', {
   createdAt: timestamp('created_at').defaultNow(),
 });
 
+// ── 가격 제안 (Phase 4) ──
+export const priceOffers = pgTable('price_offers', {
+  id: bigserial('id', { mode: 'number' }).primaryKey(),
+  productId: integer('product_id').references(() => products.id, { onDelete: 'cascade' }).notNull(),
+  buyerId: uuid('buyer_id').references(() => users.id).notNull(),
+  sellerId: uuid('seller_id').references(() => users.id).notNull(),
+  chatRoomId: integer('chat_room_id').references(() => chatRooms.id, { onDelete: 'cascade' }).notNull(),
+  messageId: integer('message_id').references(() => messages.id),
+  offerPrice: integer('offer_price').notNull(),
+  status: text('status').default('PENDING'), // PENDING | ACCEPTED | REJECTED
+  respondedAt: timestamp('responded_at'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
 // ── 신고 (Phase 3) ──
 export const reports = pgTable('reports', {
   id: bigserial('id', { mode: 'number' }).primaryKey(),
